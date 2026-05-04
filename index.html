@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job HR Solution | Official Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #002366;
+            --accent: #007bff;
+            --success: #28a745;
+            --danger: #dc3545;
+            --white: #ffffff;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            margin: 0; 
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: #333;
+        }
+
+        /* --- NEW ATTRACTIVE LOGO SECTION --- */
+        nav {
+            background: var(--white);
+            padding: 20px 5%;
+            display: flex;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .company-name { 
+            font-size: 2.2rem; /* Size badha di gayi hai */
+            font-weight: 800; 
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: default;
+            transition: transform 0.3s ease;
+            
+            /* Color Animation Effect */
+            background: linear-gradient(to right, #002366, #007bff, #00c6ff, #002366);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shine 4s linear infinite;
+        }
+
+        .company-name:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+        /* ---------------------------------- */
+
+        header {
+            background: linear-gradient(rgba(0,35,102,0.8), rgba(0,35,102,0.8)), url('https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+            margin-bottom: 40px;
+        }
+
+        .container { width: 92%; max-width: 900px; margin: 0 auto; }
+
+        .search-container {
+            background: white;
+            padding: 5px;
+            border-radius: 50px;
+            display: flex;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            margin: -40px auto 40px auto;
+            max-width: 600px;
+        }
+        .search-container input {
+            border: none; outline: none; padding: 15px 25px; width: 100%; font-size: 1rem; border-radius: 50px;
+        }
+
+        .job-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            display: flex;
+            gap: 20px;
+            border: 1px solid rgba(255,255,255,0.3);
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .comp-logo { width: 80px; height: 80px; border-radius: 12px; object-fit: cover; background: #eee; border: 1px solid #ddd; }
+        .job-info { flex: 1; }
+        .job-info h3 { margin: 0; color: var(--primary); font-size: 1.4rem; }
+        .meta-tags { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0; }
+        .tag { background: #f0f4f8; padding: 5px 12px; border-radius: 6px; font-size: 0.85rem; font-weight: 500; color: #444; }
+
+        .btn { border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.3s; }
+        .btn-apply { background: var(--primary); color: white; width: 100%; margin-top: 10px; }
+        .btn-delete { background: var(--danger); color: white; margin-top: 15px; padding: 8px 15px; font-size: 0.8rem; }
+        .btn-back { background: #6c757d; color: white; width: 100%; margin-top: 10px; }
+
+        #loginBox, #adminPanel, #applySection {
+            display: none; background: white; padding: 30px; border-radius: 15px; margin-bottom: 30px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+        }
+
+        input, textarea, select {
+            width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 1rem;
+        }
+
+        footer { text-align: center; padding: 60px; color: #444; background: white; margin-top: 50px; border-top: 1px solid #eee; }
+        .social-links { margin-bottom: 20px; }
+        .social-links a { color: var(--primary); font-size: 2rem; margin: 0 20px; text-decoration: none; transition: 0.3s; display: inline-block; }
+        .social-links a:hover { color: var(--accent); transform: translateY(-5px); }
+        .secret-trigger { cursor: default; user-select: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<nav><div class="company-name">Job HR Solution</div></nav>
+
+<header>
+    <h1>Find Your Professional Future</h1>
+    <p>Simplified recruitment for freshers and experienced professionals</p>
+</header>
+
+<div class="container">
+    <div class="search-container">
+        <input type="text" id="searchInput" onkeyup="searchJobs()" placeholder="Search by Position, Company or City...">
+    </div>
+
+    <div id="loginBox">
+        <h3 style="text-align:center;">Admin Authentication</h3>
+        <input type="text" id="user" placeholder="Username">
+        <input type="password" id="pass" placeholder="Password">
+        <button class="btn btn-apply" onclick="checkAuth()">Login</button>
+        <button class="btn btn-back" onclick="closeAdmin()">Back to Website</button>
+    </div>
+
+    <div id="adminPanel">
+        <h3 style="color: var(--danger);">Dashboard: Post New Job</h3>
+        <input type="text" id="pos" placeholder="Job Position">
+        <input type="text" id="comp" placeholder="Company Name">
+        <input type="text" id="logoUrl" placeholder="Logo Link or Name">
+        <div style="display: flex; gap:10px;">
+            <input type="text" id="city" placeholder="City">
+            <input type="text" id="state" placeholder="State">
+        </div>
+        <input type="text" id="sal" placeholder="Salary Range">
+        <textarea id="desc" rows="4" placeholder="Detailed Job Description"></textarea>
+        <button class="btn btn-apply" style="background: var(--success);" onclick="createJob()">Publish Vacancy</button>
+        <button class="btn btn-back" onclick="closeAdmin()">Back to Jobs View</button>
+        <button class="btn" onclick="logout()" style="background:none; color:var(--danger); width:100%; margin-top:10px;">Logout & Exit</button>
+    </div>
+
+    <div id="jobDisplay"></div>
+
+    <div id="applySection">
+        <h3>Application Form: <span id="jobName" style="color: var(--accent);"></span></h3>
+        <form action="https://formspree.io/f/jobhrsolution0@gmail.com" method="POST">
+            <input type="hidden" name="_subject" id="emailSubject">
+            <input type="text" name="Candidate Name" placeholder="Full Name" required>
+            <input type="text" name="Qualification" placeholder="Highest Qualification" required>
+            <select name="Exp_Level" required>
+                <option value="Fresher">Fresher</option>
+                <option value="Experienced">Experienced</option>
+            </select>
+            <input type="text" name="Expected_Salary" placeholder="Salary Expectation" required>
+            <input type="email" name="Candidate_Email" placeholder="Email Address" required>
+            <input type="text" name="Current_Location" placeholder="Current City and State" required>
+            <button type="submit" class="btn btn-apply">Send Application Now</button>
+            <button type="button" class="btn btn-back" onclick="closeForm()">Cancel</button>
+        </form>
+    </div>
+</div>
+
+<footer>
+    <div class="social-links">
+        <a href="https://www.instagram.com/jobhrsolutions?igsh=MW9uaHpiZnR4OTB6Zg==" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.linkedin.com/in/job-hr-solutions-hr-solution-074aa0407?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank"><i class="fab fa-linkedin"></i></a>
+    </div>
+    <p>&copy; 2026 Job HR <span class="secret-trigger" onclick="toggleLogin()">Solution</span>. All Rights Reserved.</p>
+</footer>
+
+<script>
+    let isAdminActive = false;
+    let jobs = JSON.parse(localStorage.getItem('hr_final_storage')) || [];
+
+    function toggleLogin() { document.getElementById('loginBox').style.display = 'block'; window.scrollTo(0, document.body.scrollHeight); }
+    function closeAdmin() { document.getElementById('loginBox').style.display = 'none'; document.getElementById('adminPanel').style.display = 'none'; renderJobs(jobs, false); }
+    function checkAuth() { if(document.getElementById('user').value === "gauravpayal" && document.getElementById('pass').value === "gauravthakur6143") { isAdminActive = true; document.getElementById('adminPanel').style.display = 'block'; document.getElementById('loginBox').style.display = 'none'; renderJobs(jobs, true); } else { alert("Invalid Credentials"); } }
+    function logout() { isAdminActive = false; closeAdmin(); }
+
+    function createJob() {
+        const job = { id: Date.now(), pos: document.getElementById('pos').value, comp: document.getElementById('comp').value, logo: document.getElementById('logoUrl').value || 'https://via.placeholder.com/100?text=Job', city: document.getElementById('city').value, state: document.getElementById('state').value, sal: document.getElementById('sal').value, desc: document.getElementById('desc').value, date: new Date().toLocaleDateString('en-GB') };
+        if(!job.pos || !job.comp) return alert("Fill mandatory fields");
+        jobs.push(job);
+        localStorage.setItem('hr_final_storage', JSON.stringify(jobs));
+        renderJobs(jobs, true);
+        ['pos','comp','logoUrl','city','state','sal','desc'].forEach(id => document.getElementById(id).value = '');
+    }
+
+    function deleteJob(id) { if(confirm("Delete this vacancy?")) { jobs = jobs.filter(j => j.id !== id); localStorage.setItem('hr_final_storage', JSON.stringify(jobs)); renderJobs(jobs, true); } }
+    function searchJobs() { const q = document.getElementById('searchInput').value.toLowerCase(); const filtered = jobs.filter(j => j.pos.toLowerCase().includes(q) || j.city.toLowerCase().includes(q) || j.comp.toLowerCase().includes(q)); renderJobs(filtered, isAdminActive && document.getElementById('adminPanel').style.display === 'block'); }
+
+    function renderJobs(data = jobs, showDelete = false) {
+        const display = document.getElementById('jobDisplay');
+        display.innerHTML = "";
+        if(data.length === 0) { display.innerHTML = '<div style="text-align:center; padding:50px; background:white; border-radius:15px; color:#999;">No openings found.</div>'; return; }
+        data.forEach(job => {
+            const card = document.createElement('div');
+            card.className = 'job-card';
+            card.innerHTML = `<img src="${job.logo}" class="comp-logo" onerror="this.src='https://via.placeholder.com/100?text=HR'"><div class="job-info"><div style="font-size:0.7rem; color:#888;">Posted: ${job.date}</div><h3>${job.pos}</h3><div style="font-weight:600; color:#555; margin:5px 0;">${job.comp}</div><div class="meta-tags"><span class="tag">📍 ${job.city}, ${job.state}</span><span class="tag" style="background:#e6fffa; border:1px solid #b2f5ea;">💰 ${job.sal}</span></div><p style="font-size:0.9rem; color:#666; line-height:1.5;">${job.desc}</p><button class="btn btn-apply" onclick="openApply('${job.pos}')">Apply Now</button>${showDelete ? `<button class="btn btn-delete" onclick="deleteJob(${job.id})">Remove Posting</button>` : ''}</div>`;
+            display.appendChild(card);
+        });
+    }
+
+    function openApply(title) { document.getElementById('applySection').style.display = 'block'; document.getElementById('jobName').innerText = title; document.getElementById('emailSubject').value = "Application for " + title; window.scrollTo(0, document.getElementById('applySection').offsetTop - 20); }
+    function closeForm() { document.getElementById('applySection').style.display = 'none'; }
+
+    renderJobs(jobs, false);
+</script>
+
+</body>
+</html>
