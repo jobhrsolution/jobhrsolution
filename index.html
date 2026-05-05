@@ -21,9 +21,10 @@
             background: var(--bg-gradient);
             background-attachment: fixed;
             color: #333;
+            user-select: none; 
+            -webkit-user-select: none;
         }
 
-        /* --- NEW ATTRACTIVE LOGO SECTION --- */
         nav {
             background: var(--white);
             padding: 20px 5%;
@@ -36,14 +37,11 @@
         }
 
         .company-name { 
-            font-size: 2.2rem; /* Size badha di gayi hai */
+            font-size: 2.2rem; 
             font-weight: 800; 
             text-transform: uppercase;
             letter-spacing: 2px;
             cursor: default;
-            transition: transform 0.3s ease;
-            
-            /* Color Animation Effect */
             background: linear-gradient(to right, #002366, #007bff, #00c6ff, #002366);
             background-size: 200% auto;
             color: transparent;
@@ -52,14 +50,7 @@
             animation: shine 4s linear infinite;
         }
 
-        .company-name:hover {
-            transform: scale(1.05);
-        }
-
-        @keyframes shine {
-            to { background-position: 200% center; }
-        }
-        /* ---------------------------------- */
+        @keyframes shine { to { background-position: 200% center; } }
 
         header {
             background: linear-gradient(rgba(0,35,102,0.8), rgba(0,35,102,0.8)), url('https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800&q=80');
@@ -82,9 +73,7 @@
             margin: -40px auto 40px auto;
             max-width: 600px;
         }
-        .search-container input {
-            border: none; outline: none; padding: 15px 25px; width: 100%; font-size: 1rem; border-radius: 50px;
-        }
+        .search-container input { border: none; outline: none; padding: 15px 25px; width: 100%; font-size: 1rem; border-radius: 50px; }
 
         .job-card {
             background: rgba(255, 255, 255, 0.95);
@@ -96,9 +85,7 @@
             display: flex;
             gap: 20px;
             border: 1px solid rgba(255,255,255,0.3);
-            animation: fadeIn 0.5s ease-in;
         }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .comp-logo { width: 80px; height: 80px; border-radius: 12px; object-fit: cover; background: #eee; border: 1px solid #ddd; }
         .job-info { flex: 1; }
@@ -117,14 +104,21 @@
         }
 
         input, textarea, select {
-            width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 1rem;
+            width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 0.95rem;
         }
+        .form-row { display: flex; gap: 15px; }
+        .form-row > div { flex: 1; }
+        @media (max-width: 600px) { .form-row { flex-direction: column; gap: 0; } }
+
+        #successMessage { display: none; text-align: center; padding: 40px 20px; }
+        .check-icon { font-size: 60px; color: var(--success); margin-bottom: 15px; animation: popIn 0.5s ease-out; }
+        @keyframes popIn { 0% { transform: scale(0); } 80% { transform: scale(1.2); } 100% { transform: scale(1); } }
 
         footer { text-align: center; padding: 60px; color: #444; background: white; margin-top: 50px; border-top: 1px solid #eee; }
-        .social-links { margin-bottom: 20px; }
         .social-links a { color: var(--primary); font-size: 2rem; margin: 0 20px; text-decoration: none; transition: 0.3s; display: inline-block; }
-        .social-links a:hover { color: var(--accent); transform: translateY(-5px); }
-        .secret-trigger { cursor: default; user-select: none; font-weight: bold; }
+        
+        /* UPDATED: "Solution" word ab bilkul normal text jaisa dikhega (Bold hata diya) */
+        .secret-trigger { cursor: default; } 
     </style>
 </head>
 <body>
@@ -153,10 +147,13 @@
         <h3 style="color: var(--danger);">Dashboard: Post New Job</h3>
         <input type="text" id="pos" placeholder="Job Position">
         <input type="text" id="comp" placeholder="Company Name">
-        <input type="text" id="logoUrl" placeholder="Logo Link or Name">
-        <div style="display: flex; gap:10px;">
-            <input type="text" id="city" placeholder="City">
-            <input type="text" id="state" placeholder="State">
+        
+        <input type="text" id="logoUrl" placeholder="Logo Link (Optional)">
+        <div style="font-size: 0.8rem; color: #666; margin: -5px 0 10px 5px;"><i>Tip: Use "Copy Image Address". If left blank or invalid, a colorful auto-logo will be generated!</i></div>
+        
+        <div class="form-row">
+            <div><input type="text" id="city" placeholder="City"></div>
+            <div><input type="text" id="state" placeholder="State"></div>
         </div>
         <input type="text" id="sal" placeholder="Salary Range">
         <textarea id="desc" rows="4" placeholder="Detailed Job Description"></textarea>
@@ -168,21 +165,64 @@
     <div id="jobDisplay"></div>
 
     <div id="applySection">
-        <h3>Application Form: <span id="jobName" style="color: var(--accent);"></span></h3>
-        <form action="https://formspree.io/f/jobhrsolution0@gmail.com" method="POST">
-            <input type="hidden" name="_subject" id="emailSubject">
-            <input type="text" name="Candidate Name" placeholder="Full Name" required>
-            <input type="text" name="Qualification" placeholder="Highest Qualification" required>
-            <select name="Exp_Level" required>
-                <option value="Fresher">Fresher</option>
-                <option value="Experienced">Experienced</option>
-            </select>
-            <input type="text" name="Expected_Salary" placeholder="Salary Expectation" required>
-            <input type="email" name="Candidate_Email" placeholder="Email Address" required>
-            <input type="text" name="Current_Location" placeholder="Current City and State" required>
-            <button type="submit" class="btn btn-apply">Send Application Now</button>
-            <button type="button" class="btn btn-back" onclick="closeForm()">Cancel</button>
-        </form>
+        <div id="formContainer">
+            <h3 style="margin-top:0;">Apply for: <span id="jobName" style="color: var(--accent);"></span></h3>
+            
+            <form id="applicationForm">
+                <input type="hidden" name="_subject" id="emailSubject">
+                
+                <div class="form-row">
+                    <div><input type="text" name="Candidate_Name" placeholder="Full Name" required></div>
+                    <div><input type="tel" name="Phone_Number" placeholder="Mobile Number"></div>
+                </div>
+
+                <input type="email" name="Candidate_Email" placeholder="Email Address" required>
+                
+                <div class="form-row">
+                    <div><input type="text" name="Qualification" placeholder="Highest Qualification"></div>
+                    <div>
+                        <select name="Total_Experience">
+                            <option value="" disabled selected>Total Experience</option>
+                            <option value="Fresher">Fresher</option>
+                            <option value="1-3 Years">1 to 3 Years</option>
+                            <option value="3-5 Years">3 to 5 Years</option>
+                            <option value="5+ Years">5+ Years</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div><input type="text" name="Expected_Salary" placeholder="Expected Salary CTC"></div>
+                    <div>
+                        <select name="Notice_Period">
+                            <option value="" disabled selected>Notice Period</option>
+                            <option value="Immediate Joiner">Immediate Joiner</option>
+                            <option value="15 Days">15 Days</option>
+                            <option value="1 Month">1 Month</option>
+                            <option value="2 Months+">2 Months or more</option>
+                        </select>
+                    </div>
+                </div>
+
+                <input type="text" name="Current_Location" placeholder="Current City and State">
+                <input type="url" name="LinkedIn_Profile" placeholder="LinkedIn Profile Link">
+
+                <div style="background: #f0f4f8; padding: 15px; border-radius: 8px; margin: 10px 0; border: 1px dashed #007bff;">
+                    <label style="font-size: 0.95rem; font-weight: bold; color: #002366;">📎 Attach Resume (Drive/DropBox Link)</label>
+                    <input type="url" name="Resume_Link" placeholder="Paste your public resume link here" style="margin-top: 8px; border: 1px solid #007bff;">
+                </div>
+
+                <button type="submit" class="btn btn-apply" id="submitBtn">Submit Application</button>
+                <button type="button" class="btn btn-back" onclick="closeForm()">Cancel</button>
+            </form>
+        </div>
+
+        <div id="successMessage">
+            <div class="check-icon"><i class="fas fa-check-circle"></i></div>
+            <h2 style="color: var(--success); margin: 10px 0;">Application Successful!</h2>
+            <p style="color: #555; font-size: 1.1rem;">Thank you! Your profile has been submitted.</p>
+            <button class="btn btn-apply" style="margin-top: 20px; width: 50%;" onclick="closeForm()">View More Jobs</button>
+        </div>
     </div>
 </div>
 
@@ -195,16 +235,75 @@
 </footer>
 
 <script>
+    console.log("%cSTOP!", "color: red; font-size: 50px; font-weight: bold; text-shadow: 2px 2px black;");
+    console.log("%cThis is a restricted area. Any attempt to hack or modify this code is strictly prohibited.", "color: black; font-size: 16px; font-weight: bold;");
+
+    document.addEventListener('contextmenu', event => event.preventDefault()); 
+    document.onkeydown = function(e) {
+        if(e.keyCode == 123) { return false; } 
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; } 
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) { return false; } 
+        if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { return false; } 
+        if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; } 
+    };
+
+    setInterval(function() {
+        var before = new Date().getTime();
+        debugger;
+        var after = new Date().getTime();
+        if (after - before > 100) {
+            document.body.innerHTML = "<div style='display:flex; height:100vh; width:100vw; background:black; color:red; align-items:center; justify-content:center; flex-direction:column;'><i class='fas fa-exclamation-triangle' style='font-size:80px; margin-bottom:20px;'></i><h1 style='font-family:sans-serif;'>SECURITY BREACH DETECTED</h1><p>Your action has been blocked.</p></div>";
+        }
+    }, 1000);
+
     let isAdminActive = false;
     let jobs = JSON.parse(localStorage.getItem('hr_final_storage')) || [];
 
     function toggleLogin() { document.getElementById('loginBox').style.display = 'block'; window.scrollTo(0, document.body.scrollHeight); }
-    function closeAdmin() { document.getElementById('loginBox').style.display = 'none'; document.getElementById('adminPanel').style.display = 'none'; renderJobs(jobs, false); }
-    function checkAuth() { if(document.getElementById('user').value === "gauravpayal" && document.getElementById('pass').value === "gauravthakur6143") { isAdminActive = true; document.getElementById('adminPanel').style.display = 'block'; document.getElementById('loginBox').style.display = 'none'; renderJobs(jobs, true); } else { alert("Invalid Credentials"); } }
-    function logout() { isAdminActive = false; closeAdmin(); }
+    
+    // UPDATED: Jab bhi Admin Panel close hoga, Password aur ID clear ho jayenge!
+    function closeAdmin() { 
+        document.getElementById('user').value = ''; // ID khali karna
+        document.getElementById('pass').value = ''; // Password khali karna
+        isAdminActive = false; // Security check ko wapas lock karna
+
+        document.getElementById('loginBox').style.display = 'none'; 
+        document.getElementById('adminPanel').style.display = 'none'; 
+        renderJobs(jobs, false); 
+    }
+    
+    function checkAuth() { 
+        const u = btoa(document.getElementById('user').value);
+        const p = btoa(document.getElementById('pass').value);
+        const k1 = "Z2F1cmF2" + "cGF5YWw=";
+        const k2 = "Z2F1cmF2" + "dGhha3Vy" + "NjE0Mw==";
+
+        if(u === k1 && p === k2) { 
+            isAdminActive = true; 
+            document.getElementById('adminPanel').style.display = 'block'; 
+            document.getElementById('loginBox').style.display = 'none'; 
+            renderJobs(jobs, true); 
+        } else { 
+            alert("Security Alert: Invalid Credentials!"); 
+        } 
+    }
+    
+    function logout() { closeAdmin(); }
+
+    function escapeHTML(str) { return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag])); }
 
     function createJob() {
-        const job = { id: Date.now(), pos: document.getElementById('pos').value, comp: document.getElementById('comp').value, logo: document.getElementById('logoUrl').value || 'https://via.placeholder.com/100?text=Job', city: document.getElementById('city').value, state: document.getElementById('state').value, sal: document.getElementById('sal').value, desc: document.getElementById('desc').value, date: new Date().toLocaleDateString('en-GB') };
+        const job = { 
+            id: Date.now(), 
+            pos: escapeHTML(document.getElementById('pos').value), 
+            comp: escapeHTML(document.getElementById('comp').value), 
+            logo: document.getElementById('logoUrl').value, 
+            city: escapeHTML(document.getElementById('city').value), 
+            state: escapeHTML(document.getElementById('state').value), 
+            sal: escapeHTML(document.getElementById('sal').value), 
+            desc: escapeHTML(document.getElementById('desc').value), 
+            date: new Date().toLocaleDateString('en-GB') 
+        };
         if(!job.pos || !job.comp) return alert("Fill mandatory fields");
         jobs.push(job);
         localStorage.setItem('hr_final_storage', JSON.stringify(jobs));
@@ -213,24 +312,93 @@
     }
 
     function deleteJob(id) { if(confirm("Delete this vacancy?")) { jobs = jobs.filter(j => j.id !== id); localStorage.setItem('hr_final_storage', JSON.stringify(jobs)); renderJobs(jobs, true); } }
+    
     function searchJobs() { const q = document.getElementById('searchInput').value.toLowerCase(); const filtered = jobs.filter(j => j.pos.toLowerCase().includes(q) || j.city.toLowerCase().includes(q) || j.comp.toLowerCase().includes(q)); renderJobs(filtered, isAdminActive && document.getElementById('adminPanel').style.display === 'block'); }
 
     function renderJobs(data = jobs, showDelete = false) {
         const display = document.getElementById('jobDisplay');
         display.innerHTML = "";
         if(data.length === 0) { display.innerHTML = '<div style="text-align:center; padding:50px; background:white; border-radius:15px; color:#999;">No openings found.</div>'; return; }
+        
         data.forEach(job => {
             const card = document.createElement('div');
             card.className = 'job-card';
-            card.innerHTML = `<img src="${job.logo}" class="comp-logo" onerror="this.src='https://via.placeholder.com/100?text=HR'"><div class="job-info"><div style="font-size:0.7rem; color:#888;">Posted: ${job.date}</div><h3>${job.pos}</h3><div style="font-weight:600; color:#555; margin:5px 0;">${job.comp}</div><div class="meta-tags"><span class="tag">📍 ${job.city}, ${job.state}</span><span class="tag" style="background:#e6fffa; border:1px solid #b2f5ea;">💰 ${job.sal}</span></div><p style="font-size:0.9rem; color:#666; line-height:1.5;">${job.desc}</p><button class="btn btn-apply" onclick="openApply('${job.pos}')">Apply Now</button>${showDelete ? `<button class="btn btn-delete" onclick="deleteJob(${job.id})">Remove Posting</button>` : ''}</div>`;
+            
+            const safeCompName = encodeURIComponent(job.comp);
+            const fallbackLogo = `https://ui-avatars.com/api/?name=${safeCompName}&background=random&color=fff&size=100&bold=true`;
+            const mainLogo = job.logo ? job.logo : fallbackLogo;
+
+            card.innerHTML = `
+                <img src="${mainLogo}" class="comp-logo" onerror="this.src='${fallbackLogo}'">
+                <div class="job-info">
+                    <div style="font-size:0.7rem; color:#888;">Posted: ${job.date}</div>
+                    <h3>${job.pos}</h3>
+                    <div style="font-weight:600; color:#555; margin:5px 0;">${job.comp}</div>
+                    <div class="meta-tags">
+                        <span class="tag">📍 ${job.city}, ${job.state}</span>
+                        <span class="tag" style="background:#e6fffa; border:1px solid #b2f5ea;">💰 ${job.sal}</span>
+                    </div>
+                    <p style="font-size:0.9rem; color:#666; line-height:1.5;">${job.desc}</p>
+                    <button class="btn btn-apply" onclick="openApply('${job.pos}')">Apply Now</button>
+                    ${showDelete ? `<button class="btn btn-delete" onclick="deleteJob(${job.id})">Remove Posting</button>` : ''}
+                </div>
+            `;
             display.appendChild(card);
         });
     }
 
-    function openApply(title) { document.getElementById('applySection').style.display = 'block'; document.getElementById('jobName').innerText = title; document.getElementById('emailSubject').value = "Application for " + title; window.scrollTo(0, document.getElementById('applySection').offsetTop - 20); }
-    function closeForm() { document.getElementById('applySection').style.display = 'none'; }
+    function openApply(title) { 
+        document.getElementById('applySection').style.display = 'block'; 
+        document.getElementById('formContainer').style.display = 'block';
+        document.getElementById('successMessage').style.display = 'none';
+        document.getElementById('jobName').innerText = title; 
+        document.getElementById('emailSubject').value = "New Application: " + title; 
+        window.scrollTo(0, document.getElementById('applySection').offsetTop - 20); 
+    }
+    
+    function closeForm() { 
+        document.getElementById('applySection').style.display = 'none'; 
+        document.getElementById('applicationForm').reset();
+    }
 
     renderJobs(jobs, false);
+
+    document.getElementById('applicationForm').addEventListener('submit', function(event) {
+        event.preventDefault(); 
+
+        const form = event.target;
+        const submitBtn = document.getElementById('submitBtn');
+        const formContainer = document.getElementById('formContainer');
+        const successMsg = document.getElementById('successMessage');
+
+        const formspreeEndpoint = "https://formspree.io/f/mbdwoovr";
+
+        const originalBtnText = submitBtn.innerText;
+        submitBtn.innerText = "Please wait... Sending";
+        submitBtn.disabled = true;
+
+        fetch(formspreeEndpoint, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'Accept': 'application/json' }
+        })
+        .then(response => {
+            if (response.ok) {
+                form.reset(); 
+                formContainer.style.display = 'none'; 
+                successMsg.style.display = 'block';   
+            } else {
+                alert("Oops! There was a problem submitting your form.");
+            }
+        })
+        .catch(error => {
+            alert("Network error! Please check your internet connection.");
+        })
+        .finally(() => {
+            submitBtn.innerText = originalBtnText;
+            submitBtn.disabled = false;
+        });
+    });
 </script>
 
 </body>
